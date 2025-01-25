@@ -12,8 +12,8 @@ Before running the Rock, Paper, Scissors game, ensure you have the following ins
 
 1. **Clone the repository (if using Git):**
     ```sh
-    git clone https://github.com/theshubhamsingh/rock_paper_scissors.git
-    cd rock_paper_scissors
+    git clone https://github.com/theshubhamsingh/Office/
+    cd Office
     ```
 
 2. **Navigate to the project directory:**
