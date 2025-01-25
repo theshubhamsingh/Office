@@ -1,5 +1,4 @@
 Read before you want to run this program in your computer.
-
 ### Prerequisites
 
 Before running the Rock, Paper, Scissors game, ensure you have the following installed on your computer:
@@ -28,16 +27,23 @@ Before running the Rock, Paper, Scissors game, ensure you have the following ins
 
 If there are no additional dependencies, you can skip this step.
 
-echo "## Rock, Paper, Scissors Game" >> README.md
-echo "This is a simple implementation of the Rock, Paper, Scissors game in Python." >> README.md
-echo "### How to Play" >> README.md
-echo "1. Run the Python script." >> README.md
-echo "2. Enter your choice: rock, paper, or scissors." >> README.md
-echo "3. The computer will randomly select its choice." >> README.md
-echo "4. The winner will be displayed based on the rules of the game." >> README.md
-echo "### Requirements" >> README.md
-echo "- Python 3.x" >> README.md
-echo "### How to Run" >> README.md
-echo "```" >> README.md
-echo "python3 rock_paper_scissors.py" >> README.md
-echo "```" >> README.md
+### Rock, Paper, Scissors Game
+
+This is a simple implementation of the Rock, Paper, Scissors game in Python.
+
+### How to Play
+
+1. Run the Python script.
+2. Enter your choice: rock, paper, or scissors.
+3. The computer will randomly select its choice.
+4. The winner will be displayed based on the rules of the game.
+
+### Requirements
+
+- Python 3.x
+
+### How to Run
+
+```sh
+python3 rock_paper_scissors.py
+```
