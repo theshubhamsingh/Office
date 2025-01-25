@@ -1,8 +1,8 @@
-# Project 1: Game Collection
+# Project 1: Game Collection 📂
 
 Read before you run this program on your computer.
 
-## Prerequisites
+## Prerequisites 
 
 Before running the games, ensure you have the following installed on your computer:
 
@@ -10,7 +10,7 @@ Before running the games, ensure you have the following installed on your comput
 - **Code Editor or IDE**: (e.g., VSCode, PyCharm) for editing and running the script.
 - **Git (optional)**: For cloning the repository if you are using version control.
 
-## Installation
+## Installation 💿
 
 1. **Clone the repository (if using Git):**
     ```sh
@@ -28,7 +28,7 @@ Before running the games, ensure you have the following installed on your comput
     pip install -r requirements.txt
     ```
 
-## Available Games
+## Available Games 🎮
 
 1. **Rock, Paper, Scissors**
 2. **Advanced Quiz Game**
@@ -37,7 +37,7 @@ Before running the games, ensure you have the following installed on your comput
 
 ---
 
-### Rock, Paper, Scissors
+### Rock, Paper, Scissors ✂️🪨📃
 
 A classic hand game played between two players, in this case, the player and the computer.
 
@@ -82,7 +82,7 @@ A classic hand game played between two players, in this case, the player and the
 
 ---
 
-### Simple Quiz Game
+### Simple Quiz Game 🕹️
 
 A straightforward quiz game where the player answers multiple-choice questions.
 
@@ -125,7 +125,7 @@ A straightforward quiz game where the player answers multiple-choice questions.
 
 ---
 
-### Guess the Number
+### Guess the Number 🎲
 
 A simple, text-based game where the computer generates a random number, and the player tries to guess it.
 
