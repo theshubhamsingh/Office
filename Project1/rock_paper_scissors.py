@@ -31,3 +31,4 @@ while True:
     play_again = input("Is it interesting? Do you want to play it again? (yes/no): ").lower()
     if play_again != "yes":
         break
+    
