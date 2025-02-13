@@ -5,6 +5,7 @@ from tkinter import messagebox
 import psycopg2
 import threading
 import io
+import os
 from smtplib import SMTP_SSL
 from email.message import EmailMessage
 from validate_email_address import validate_email
@@ -96,7 +97,8 @@ def loginGui():
     #---------------------------------------------------------------
     uidValue=StringVar()
     passwordValue=StringVar()
-    image=CTkImage(light_image=Image.open('photo\img3.png'),dark_image=Image.open('photo/img3.png'),size=(300,300))
+    image_path = os.path.join(os.path.dirname(__file__), 'Project2/photo/img3.png')
+    image=CTkImage(light_image=Image.open('Project2/photo/img3.png'),dark_image=Image.open('Project2/photo/img3.png'),size=(300,300))
     img=CTkLabel(loginFrame,image=image,text='').grid(row=0,column=0,pady=90,padx=40)
     entryFrame=CTkFrame(loginFrame,width=300,height=400)
     loginText=CTkLabel(entryFrame,text="Login",font=('Roboto',50)).pack(pady=10,padx=80)
@@ -118,7 +120,7 @@ def loginGui():
 def optionFrameGui(uid):
     exStudentName=Database(f"SELECT firstname || ' ' || lastname FROM student WHERE auid={uid};")
     studentNameFrame=CTkFrame(optionFrame,height=200)
-    UserImage=CTkImage(light_image=Image.open('photo/user1.png'),dark_image=Image.open('photo/user.png'),size=(25,25))
+    UserImage=CTkImage(light_image=Image.open('Project2/photo/user1.png'),dark_image=Image.open('Project2/photo/user.png'),size=(25,25))
     global nameButton
     nameButton=CTkButton(studentNameFrame,text=exStudentName[0][0].title(),font=("Roboto", 20 ,"bold"),command=lambda:studentInformationGui(uid),height=50,image=UserImage,fg_color='transparent',text_color='white')
     nameButton.grid(row=0,column=0,pady=5,padx=10)
@@ -127,9 +129,9 @@ def optionFrameGui(uid):
     if get_appearance_mode()=="Light":
         nameButton.configure(text_color='black')
     #Image-----------------------------------------------
-    homeImage=CTkImage(light_image=Image.open('photo/home.png'),dark_image=Image.open('photo/home.png'),size=(20,20))
-    resultImage=CTkImage(light_image=Image.open('photo/result.png'),dark_image=Image.open('photo/result.png'),size=(20,20))
-    aboutImage=CTkImage(light_image=Image.open('photo/about.png'),dark_image=Image.open('photo/about.png'),size=(20,20))
+    homeImage=CTkImage(light_image=Image.open('Project2/photo/home.png'),dark_image=Image.open('Project2/photo/home.png'),size=(20,20))
+    resultImage=CTkImage(light_image=Image.open('Project2/photo/result.png'),dark_image=Image.open('Project2/photo/result.png'),size=(20,20))
+    aboutImage=CTkImage(light_image=Image.open('Project2/photo/about.png'),dark_image=Image.open('Project2/photo/about.png'),size=(20,20))
     #Button----------------------------------------------
     homeButton=CTkButton(optionFrame,text="Home",height=40,font=("Roboto", 20),image=homeImage,command=home)
     homeButton.grid(row=2,column=0,pady=10,padx=10)
@@ -146,7 +148,7 @@ def optionFrameGui(uid):
     optionFrame.pack(side='left',fill=Y)
 
 def textFrameGui():
-    # header=CTkImage(dark_image=Image.open("photo/h.png"),light_image=Image.open("photo/h.png"),size=(750,200))
+    # header=CTkImage(dark_image=Image.open("Project2/photo/h.png"),light_image=Image.open("Project2/photo/h.png"),size=(750,200))
     # headerLabel=CTkLabel(textFrame,image=header,text="")
     # headerLabel.pack(padx=2,pady=2)
     textFrame.pack(side='top',fill=X,pady=5,padx=5)
@@ -161,7 +163,7 @@ def subjectFrameGui(uid):
         if i[4]!=None:
             bookImage=CTkImage(light_image=Image.open(io.BytesIO(i[4])),dark_image=Image.open(io.BytesIO(i[4])),size=(150,150))
         else:
-            bookImage=CTkImage(light_image=Image.open('photo/book.png'),dark_image=Image.open('photo/book.png'),size=(150,150))
+            bookImage=CTkImage(light_image=Image.open('Project2/photo/book.png'),dark_image=Image.open('Project2/photo/book.png'),size=(150,150))
         # button of subject---------------------------------
         def buttonValue(subject_id=i[1]):
             questionGui(uid,subject_id)
@@ -335,11 +337,11 @@ def studentInformationGui(uid):
 
         # ----------------------------------------------------------------------------------------------------------------
         editProfileFrame=CTkFrame(studentInformationFrame,fg_color='transparent')
-        editImage=CTkImage(dark_image=Image.open('photo/edit.png'),light_image=Image.open('photo/edit.png'),size=(25,25))
+        editImage=CTkImage(dark_image=Image.open('Project2/photo/edit.png'),light_image=Image.open('Project2/photo/edit.png'),size=(25,25))
         button1=CTkButton(editProfileFrame,text="Edit Profile",font=('Roboto',20),height=40,image=editImage,command=lambda:editProfile(uid))
         button1.pack(side="right",padx=20,pady=(10,0))
         editProfileFrame.pack(padx=10,pady=10,fill=X)
-        profileImageLode=CTkImage(dark_image=Image.open("photo/profile.png"),light_image=Image.open("photo/profile1.png"),size=(300,300))
+        profileImageLode=CTkImage(dark_image=Image.open("Project2/photo/profile.png"),light_image=Image.open("Project2/photo/profile1.png"),size=(300,300))
         profileImageLabel=CTkLabel(studentInformationFrame,text='',image=profileImageLode)
         profileImageLabel.pack()
         nameLabel=CTkLabel(studentInformationFrame,text=f'{exInformation[0][1].title()}',font=('Roboto',50))
@@ -481,10 +483,10 @@ def resultGui(uid):
 
         #resualt mail Frame-------------------------------------------------------
         resmailFrame=CTkFrame(resultFrame)
-        resultButtonImage=CTkImage(dark_image=Image.open('photo/exam-results.png'),light_image=Image.open('photo/exam-results.png'),size=(20,20))
+        resultButtonImage=CTkImage(dark_image=Image.open('Project2/photo/exam-results.png'),light_image=Image.open('Project2/photo/exam-results.png'),size=(20,20))
         resultButton=CTkButton(resmailFrame,text="Result",height=40,font=("Roboto",20),image=resultButtonImage,command=lambda:resultInApp(uid))
         resultButton.pack(padx=10,pady=5,side="left")
-        mailButtonImage=CTkImage(dark_image=Image.open('photo/mail.png'),light_image=Image.open('photo/mail.png'),size=(25,25))
+        mailButtonImage=CTkImage(dark_image=Image.open('Project2/photo/mail.png'),light_image=Image.open('Project2/photo/mail.png'),size=(25,25))
         mailButton=CTkButton(resmailFrame,text="Mail",height=40,font=("Roboto",20),image=mailButtonImage,command=lambda:threading.Thread(target=resultMail,args=(uid,)).start())
         mailButton.pack(padx=10,pady=5,side="right")
         resmailFrame.pack(padx=5,pady=5,fill=X) 
@@ -494,7 +496,7 @@ def resultGui(uid):
             if i[2]!=None:
                 bookImage=CTkImage(light_image=Image.open(io.BytesIO(i[2])),dark_image=Image.open(io.BytesIO(i[2])),size=(150,150))
             else:
-                bookImage=CTkImage(light_image=Image.open('photo/book.png'),dark_image=Image.open('photo/book.png'),size=(150,150))
+                bookImage=CTkImage(light_image=Image.open('Project2/photo/book.png'),dark_image=Image.open('Project2/photo/book.png'),size=(150,150))
             # button of subject---------------------------------
             def buttonValue(subject_id=i[1]):
                 studentResult(uid,subject_id)
@@ -528,15 +530,15 @@ def studentResult(uid,subject_id):
                 widget.destroy()
         packFrame.clear()
         backButtonFrame=CTkFrame(resultFrame)
-        backImage=CTkImage(dark_image=Image.open('photo/back.png'),light_image=Image.open('photo/back.png'),size=(20,20))
+        backImage=CTkImage(dark_image=Image.open('Project2/photo/back.png'),light_image=Image.open('Project2/photo/back.png'),size=(20,20))
         backButton=CTkButton(backButtonFrame,text="Back",command=lambda:resultGui(uid),image=backImage,height=40,font=("Roboto",20))
         backButton.pack(padx=10,pady=5,side="left")
 
-        resultButtonImage=CTkImage(dark_image=Image.open('photo/exam-results.png'),light_image=Image.open('photo/exam-results.png'),size=(20,20))
+        resultButtonImage=CTkImage(dark_image=Image.open('Project2/photo/exam-results.png'),light_image=Image.open('Project2/photo/exam-results.png'),size=(20,20))
         resultButton=CTkButton(backButtonFrame,text="Result",height=40,font=("Roboto",20),image=resultButtonImage,command=lambda:resultInApp(uid))
         resultButton.pack(padx=10,pady=5,side="right")
 
-        mailButtonImage=CTkImage(dark_image=Image.open('photo/mail.png'),light_image=Image.open('photo/mail.png'),size=(25,25))
+        mailButtonImage=CTkImage(dark_image=Image.open('Project2/photo/mail.png'),light_image=Image.open('Project2/photo/mail.png'),size=(25,25))
         mailButton=CTkButton(backButtonFrame,text="Mail",height=40,font=("Roboto",20),image=mailButtonImage,command=lambda:threading.Thread(target=resultMail,args=(uid,)).start())
         mailButton.pack(padx=10,pady=5,side="right")
         backButtonFrame.pack(padx=5,pady=5,fill=X)
@@ -565,7 +567,7 @@ def studentResult(uid,subject_id):
                           
 def aboutGui():
     import json
-    with open("photo/about.json",'r')as f:
+    with open("Project2/photo/about.json",'r')as f:
         data=f.read()
     data2=json.loads(data)
     textFrame.pack_forget()

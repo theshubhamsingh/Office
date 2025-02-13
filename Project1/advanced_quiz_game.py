@@ -19,7 +19,12 @@ def quiz_game_from_excel(file_path):
             print(f"d) {row['Option D']}")
             
             # Get the user's answer
-            answer = input("Your answer: ").strip().lower()
+            while True:
+                answer = input("Your answer: ").strip().lower()
+                if answer in ['a', 'b', 'c', 'd']:
+                    break
+                else:
+                    print("Please choose only from the given options: a, b, c, or d.")
             
             # Check if the answer is correct
             if answer == row['Answer'].strip().lower():
