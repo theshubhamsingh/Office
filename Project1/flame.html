@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background: black;
+                display: grid;
+                place-items: center;
+                height: 100vh;
+            }
+            .container {
+                position: relative;
+                width: 180px;
+                height: 220px;
+                transform-origin: center bottom;
+            }
+            .flame {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 0.85;
+                animation: flicker 0.18s infinite alternate;
+            }
+            .flame.red {
+                bottom: 70px;
+                width: 110px;
+                height: 170px;
+                background: linear-gradient(180deg, #ff9800 0%, #ff3d00 80%, #b71c1c 100%);
+                clip-path: polygon(50% 0%, 70% 20%, 80% 40%, 70% 80%, 50% 100%, 30% 80%, 20% 40%, 30% 20%);
+                z-index: 2;
+            }
+            .flame.orange {
+                bottom: 90px;
+                width: 80px;
+                height: 120px;
+                background: linear-gradient(180deg, #ffd600 0%, #ff9800 80%, #ff3d00 100%);
+                clip-path: polygon(50% 0%, 65% 25%, 75% 45%, 65% 80%, 50% 100%, 35% 80%, 25% 45%, 35% 25%);
+                z-index: 3;
+            }
+            .flame.yellow {
+                bottom: 110px;
+                width: 50px;
+                height: 80px;
+                background: linear-gradient(180deg, #fffde7 0%, #fff176 80%, #ffd600 100%);
+                clip-path: polygon(50% 0%, 60% 30%, 70% 55%, 60% 80%, 50% 100%, 40% 80%, 30% 55%, 40% 30%);
+                z-index: 4;
+            }
+            .flame.white {
+                bottom: 125px;
+                width: 30px;
+                height: 50px;
+                background: linear-gradient(180deg, #ffffff 0%, #fffde7 100%);
+                clip-path: polygon(50% 0%, 58% 35%, 65% 60%, 58% 85%, 50% 100%, 42% 85%, 35% 60%, 42% 35%);
+                z-index: 5;
+                opacity: 0.7;
+            }
+            .blue {
+                position: absolute;
+                left: 50%;
+                bottom: 60px;
+                transform: translateX(-50%);
+                width: 30px;
+                height: 30px;
+                background: radial-gradient(ellipse at center, #2196f3 80%, transparent 100%);
+                border-radius: 50%;
+                box-shadow: 0 0 40px 20px #2196f3;
+                z-index: 6;
+                opacity: 0.5;
+                animation: flicker 0.2s 0.12s infinite alternate;
+            }
+            .lamp {
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                transform: translateX(-50%);
+                font-size: 100px;
+                z-index: 10;
+                filter: drop-shadow(0 0 20px gold);
+            }
+            @keyframes flicker {
+                0% { filter: brightness(1.1) blur(0.5px);}
+                10% { filter: brightness(1.3) blur(1px);}
+                20% { filter: brightness(0.9) blur(0.7px);}
+                30% { filter: brightness(1.2) blur(1.2px);}
+                40% { filter: brightness(1) blur(0.6px);}
+                50% { filter: brightness(1.25) blur(1.5px);}
+                60% { filter: brightness(1.05) blur(0.8px);}
+                70% { filter: brightness(1.15) blur(1px);}
+                80% { filter: brightness(0.95) blur(0.5px);}
+                90% { filter: brightness(1.2) blur(1.3px);}
+                100% { filter: brightness(1.1) blur(0.5px);}
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="red flame"></div>
+            <div class="orange flame"></div>
+            <div class="yellow flame"></div>
+            <div class="white flame"></div>
+            <div class="blue"></div>
+            <div class="lamp">🪔</div>
+        </div>
+    </body>
+</html>

@@ -51,7 +51,7 @@
                 font-size: 32px;
                 transform: translate(-50%, -50%);
                 z-index: 3;
-                animation: earth-orbit 8s linear infinite;
+                animation: earth-orbit 16s linear infinite;
                 background: none;
                 box-shadow: none;
             }
@@ -76,12 +76,13 @@
                 left: 50%;
                 width: 14px;
                 height: 14px;
-                background: radial-gradient(circle at 40% 40%, #e0e0e0 80%, #888 100%);
+                background: none;
                 border-radius: 50%;
-                box-shadow: 0 0 8px 2px rgba(200,200,200,0.3);
+                box-shadow: none;
                 transform: translate(-50%, -50%);
                 z-index: 4;
-                animation: moon-orbit 2s linear infinite;
+                animation: moon-orbit 8s linear infinite;
+                size: 0.5;
             }
             @keyframes moon-orbit {
                 from { transform: translate(-50%, -50%) rotate(0deg) translateX(35px); }
@@ -96,7 +97,9 @@
             <div class="earth">
                 🌍
                 <div class="moon-orbit">
-                    <div class="moon"></div>
+                    <div class="moon">
+                        🌔
+                    </div>
                 </div>
             </div>
         </div>
