@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantify Your Digital Self</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent;
+        }
+        
+        .mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- Custom Slider Styling (High Contrast Override) --- */
+        input[type=range] {
+            -webkit-appearance: none; 
+            appearance: none;
+            background: transparent; 
+            width: 100%; 
+            display: block !important;
+        }
+
+        /* Thumb Styling (Webkit - Chrome, Safari) */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px; 
+            width: 20px;
+            border-radius: 0; 
+            background: #000; 
+            cursor: grab;
+            margin-top: -6px; 
+            transition: box-shadow 0.15s, transform 0.15s;
+            border: 3px solid white; 
+            box-shadow: 2px 2px 0 #000; 
+        }
+        input[type=range]:hover::-webkit-slider-thumb {
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.2); 
+        }
+        input[type=range]:active::-webkit-slider-thumb {
+            transform: scale(1.05);
+        }
+
+        /* Track Styling (Webkit) */
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #000; 
+            border-radius: 0; 
+            border: 2px solid white; 
+        }
+
+        /* Thumb Styling (Firefox) */
+        input[type=range]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 0;
+            background: #000;
+            cursor: grab;
+            transition: box-shadow 0.15s, transform 0.15s;
+            border: 3px solid white;
+            box-shadow: 2px 2px 0 #000;
+        }
+        input[type=range]:hover::-moz-range-thumb {
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.2);
+        }
+        input[type=range]:active::-moz-range-thumb {
+            transform: scale(1.05);
+        }
+        
+        /* Track Styling (Firefox) */
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #000; 
+            border-radius: 0;
+            border: 2px solid white;
+        }
+        
+        .risk-meter {
+            transition: width 1s ease-in-out, background-color 1s ease;
+        }
+
+        /* Watcher Badge Style */
+        .impact-item {
+            display: flex;
+            align-items: flex-start;
+        }
+        .impact-item::before {
+            content: '>';
+            font-weight: bold;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border: 4px solid #000;
+            box-shadow: 10px 10px 0 #990000;
+            max-width: 90%;
+            width: 400px;
+        }
+    </style>
+</head>
+<body class="p-6 max-w-xl mx-auto bg-white border-2 border-black shadow-[8px_8px_0_#000]">
+
+    <div id="time-limit-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="serif-title text-3xl font-extrabold text-[#990000] mb-4 border-b-2 border-[#990000] pb-2">
+                ERROR: TIME OVERRUN
+            </h3>
+            <p class="mono text-sm text-black mb-6 leading-relaxed">
+                The calculated digital engagement time exceeds <b>24 hours</b>. This suggests an <b>unrealistic input</b> that compromises the sociological accuracy of the assessment. Re-evaluate your hourly estimates.
+            </p>
+            <button onclick="document.getElementById('time-limit-modal').classList.add('hidden')" 
+                    class="w-full bg-[#990000] hover:bg-black border-2 border-white text-white font-bold py-3 px-4 rounded-none transition duration-150 mono text-sm">
+                ACKNOWLEDGE & RETURN
+            </button>
+        </div>
+    </div>
+    <div class="mb-8 border-b-4 border-black pb-4">
+        <h2 class="text-4xl font-extrabold text-black tracking-tight serif-title">
+            <span class="text-xl mono block uppercase tracking-widest leading-none">THE DIGITAL SELF</span>
+            QUANTIFICATION ENGINE
+        </h2>
+        <p class="text-sm text-black mt-3 mono">BASED ON "THE DIGITAL SELF & ITS GOVERNANCE" (SINGH &amp; ARYA, 2024)</p>
+    </div>
+
+    <div id="quiz-section">
+        <p class="mb-8 text-sm text-black mono text-justify">
+            Estimate your daily <b>active engagement</b> (in hours) with these platforms. The calculation measures how much of your private <b>behavioral surplus</b> has been converted into data.
+        </p>
+
+        <div class="mb-6" data-category="insta">
+            <div class="flex justify-between mb-2">
+                <label class="text-xs font-bold text-black uppercase mono tracking-widest">Visual Performativity <b>(Such as Instagram / Pinterest)</b></label>
+                <span id="val-insta" class="text-sm font-bold text-black mono">0.0 hrs</span>
+            </div>
+            <input type="range" min="0" max="10" value="0" step="0.5" class="w-full calc-input" oninput="updateVal('val-insta', this.value)">
+        </div>
+
+        <div class="mb-6" data-category="x">
+            <div class="flex justify-between mb-2">
+                <label class="text-xs font-bold text-black uppercase mono tracking-widest">Opinion Mining <b>(Such as X or Twitter)</b></label>
+                <span id="val-x" class="text-sm font-bold text-black mono">0.0 hrs</span>
+            </div>
+            <input type="range" min="0" max="10" value="0" step="0.5" class="w-full calc-input" oninput="updateVal('val-x', this.value)">
+        </div>
+
+        <div class="mb-6" data-category="tiktok">
+            <div class="flex justify-between mb-2">
+                <label class="text-xs font-bold text-black uppercase mono tracking-widest">Behavioral Surplus <b>(Such as Shorts / Reels)</b></label>
+                <span id="val-tiktok" class="text-sm font-bold text-black mono">0.0 hrs</span>
+            </div>
+            <input type="range" min="0" max="10" value="0" step="0.5" class="w-full calc-input" oninput="updateVal('val-tiktok', this.value)">
+        </div>
+
+        <div class="mb-8" data-category="msg">
+            <div class="flex justify-between mb-2">
+                <label class="text-xs font-bold text-black uppercase mono tracking-widest">Network Mapping <b>(Such as WhatsApp / Telegram)</b></label>
+                <span id="val-msg" class="text-sm font-bold text-black mono">0.0 hrs</span>
+            </div>
+            <input type="range" min="0" max="10" value="0" step="0.5" class="w-full calc-input" oninput="updateVal('val-msg', this.value)">
+        </div>
+
+        <div class="flex flex-col items-center justify-center mb-8 bg-white p-6 border-2 border-black shadow-[4px_4px_0_#000]">
+            <h3 class="text-sm font-bold text-black uppercase mono tracking-widest mb-4">Total Digital Engagement</h3>
+            <div class="relative w-32 h-32 flex items-center justify-center">
+                <svg viewBox="0 0 120 120" class="absolute transform -rotate-90">
+                    <circle r="50" cx="60" cy="60" fill="transparent" stroke="#e5e7eb" stroke-width="10" class="border-2 border-black"></circle>
+                    <circle r="50" cx="60" cy="60" fill="transparent" stroke="#000" stroke-width="10" stroke-linecap="round" id="clock-progress-bar" stroke-dasharray="314.16"></circle>
+                </svg>
+                <div class="flex flex-col items-center">
+                    <span id="total-usage-display" class="text-3xl font-extrabold text-black mono">0.0</span>
+                    <span class="text-xs font-semibold text-black uppercase">OF 24 HRS</span>
+                </div>
+            </div>
+            <p id="clock-description" class="text-xs text-black mono mt-3 text-center"></p>
+        </div>
+        
+        <button onclick="calculateDatafication()" class="w-full bg-black hover:bg-white border-2 border-black text-white hover:text-black font-extrabold py-4 px-4 rounded-none transition duration-150 mono text-base shadow-[4px_4px_0_#000]">
+            CALCULATE DATAFICATION SCORE
+        </button>
+    </div>
+
+    <div id="result-section" class="hidden animate-fade-in">
+        <div class="mb-4 flex justify-between items-end border-b border-black pb-2">
+            <span class="text-xs font-bold text-black uppercase mono tracking-widest">DATAFICATION PERCENTAGE</span>
+            <span id="score-display" class="text-4xl font-extrabold text-black serif-title">0%</span>
+        </div>
+        
+        <div class="w-full bg-white border-2 border-black h-6 mb-8 overflow-hidden">
+            <div id="risk-bar" class="risk-meter h-full" style="width: 0%"></div>
+        </div>
+
+        <div class="bg-white p-6 rounded-none border-2 border-black shadow-[4px_4px_0_#000]">
+            <h3 id="risk-title" class="font-extrabold text-2xl text-black mb-3 serif-title"></h3>
+            <p id="risk-desc" class="text-sm text-black leading-relaxed mono text-justify"></p>
+            
+            <div class="mt-6 pt-4 border-t-2 border-black">
+                <p class="text-xs font-bold mb-3 uppercase tracking-widest mono">SOCIOLOGICAL IMPACT</p>
+                <div id="impact-list" class="flex flex-col gap-2 text-xs text-black mono">
+                    </div>
+            </div>
+        </div>
+
+        <button onclick="resetQuiz()" class="mt-8 text-sm text-black hover:bg-black hover:text-white w-full text-center uppercase tracking-widest font-bold transition-colors py-2 border-2 border-black rounded-none">
+            RESET INVENTORY
+        </button>
+    </div>
+
+    <script>
+        // Configuration
+        const categories = ['insta', 'x', 'tiktok', 'msg'];
+        const CLOCK_CIRCUMFERENCE = 314.16; 
+
+        // --- Core Slider Logic ---
+
+        function updateVal(id, val) {
+            document.getElementById(id).innerText = parseFloat(val).toFixed(1) + " hrs";
+            updateClock();
+        }
+
+        function updateClock() {
+            const inputs = document.querySelectorAll('.calc-input');
+            let totalHours = 0;
+            
+            inputs.forEach(input => {
+                totalHours += parseFloat(input.value);
+            });
+
+            const progressBar = document.getElementById('clock-progress-bar');
+            const display = document.getElementById('total-usage-display');
+            const description = document.getElementById('clock-description');
+            const modal = document.getElementById('time-limit-modal');
+
+            // 2. Logic to display the modal if time exceeds 24 hours
+            if (totalHours > 24) {
+                modal.classList.remove('hidden');
+                // Cap displayed hours for the clock visualization
+                var displayHours = 24;
+                var percentageOfDay = 1;
+            } else {
+                modal.classList.add('hidden');
+                var displayHours = totalHours;
+                var percentageOfDay = displayHours / 24;
+            }
+
+            // Calculate progress relative to 24 hours
+            const strokeOffset = CLOCK_CIRCUMFERENCE - (percentageOfDay * CLOCK_CIRCUMFERENCE);
+
+            // Apply visual updates
+            progressBar.style.strokeDashoffset = strokeOffset;
+            progressBar.style.transition = 'stroke-dashoffset 0.5s ease-out, stroke 0.5s ease';
+            display.innerText = totalHours.toFixed(1);
+
+            // Dynamic coloring based on usage relative to the day
+            let clockColor;
+            let descText;
+
+            if (totalHours > 24) {
+                // If over 24 hours, use extreme warning color
+                clockColor = '#FF0000'; 
+                descText = `IMPOSSIBLE: Time exceeds 24 hours. Recalibrate input.`;
+            } else if (totalHours >= 12) {
+                clockColor = '#990000'; // Deep Maroon (EXTREME)
+                descText = `EXTREME: Usage now exceeds half the day (12 hours), indicating near-total digital saturation.`;
+            } else if (totalHours >= 8) {
+                clockColor = '#cc8400'; // Dark Amber (HIGH)
+                descText = `HIGH: Usage exceeds 1/3rd of the day. A major portion of your time is digitally mediated.`;
+            } else if (totalHours >= 4) {
+                clockColor = '#185526'; // Forest Green (MODERATE)
+                descText = `MODERATE: Usage is manageable, but platforms still occupy a significant daily window.`;
+            } else {
+                clockColor = '#005b63'; // Dark Teal (LOW)
+                descText = `LOW: Your usage is contained, leaving ample time for non-mediated activities.`;
+            } 
+
+            progressBar.style.stroke = clockColor;
+            description.innerText = descText;
+        }
+
+        // --- Calculation Logic ---
+        function calculateDatafication() {
+            const inputs = document.querySelectorAll('.calc-input');
+            let totalHours = 0;
+            
+            inputs.forEach(input => {
+                totalHours += parseFloat(input.value);
+            });
+
+            // Check if calculation attempt is made with unrealistic data
+            if (totalHours > 24) {
+                document.getElementById('time-limit-modal').classList.remove('hidden');
+                return; // Stop calculation
+            }
+
+            // Logic: 12 hours of engagement is considered 100% datafication saturation
+            let percentage = Math.round((totalHours / 12) * 100);
+            if (percentage > 100) percentage = 100;
+            
+            // UI Updates
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+            
+            // Animate Bar
+            const bar = document.getElementById('risk-bar');
+            setTimeout(() => {
+                bar.style.width = percentage + "%";
+                document.getElementById('score-display').innerText = percentage + "%";
+                
+                // Define the four states based on new thresholds
+                if(percentage < 20) {
+                    bar.className = "risk-meter h-full bg-[#185526]";
+                } else if(percentage < 50) {
+                    bar.className = "risk-meter h-full bg-[#cc8400]";
+                } else if(percentage < 80) {
+                    bar.className = "risk-meter h-full bg-[#964B00]"; 
+                } else {
+                    bar.className = "risk-meter h-full bg-[#990000]";
+                }
+            }, 100);
+
+            const titleEl = document.getElementById('risk-title');
+            const descEl = document.getElementById('risk-desc');
+            const impactEl = document.getElementById('impact-list');
+
+            let impacts = [];
+
+            if (percentage < 20) {
+                titleEl.innerText = "STATE: THE INSTRUMENTAL SELF (UTILITY)";
+                descEl.innerText = "Digital engagement is minimal and strictly goal-oriented (instrumental use, e.g., quick communication, specific information retrieval). This self exists almost entirely outside digital platforms, maintaining robust private spheres. Data production is a negligible byproduct, not a primary mode of being.";
+                impacts = [
+                    "Minimum data footprint",
+                    "High psychological autonomy",
+                    "Immunity to platform manipulation"
+                ];
+            } else if (percentage < 50) {
+                titleEl.innerText = "STATE: THE BRIDGED SELF (DRAMATURGY)";
+                descEl.innerText = "You actively manage the boundary between private reality and public performance (Goffman's front stage). Engagement is conscious and moderated. While you perform, you retain awareness of the underlying audience and the potential data consequences. Algorithmic feedback is noted but not wholly internalized.";
+                impacts = [
+                    "Intentional self-curation",
+                    "Moderate algorithmic visibility",
+                    "Risk of performative fatigue"
+                ];
+            } else if (percentage < 80) {
+                titleEl.innerText = "STATE: THE EMBEDDED SELF (ALGORITHMIC GOVERNANCE)";
+                descEl.innerText = "A state of pervasive digital co-presence. Platforms are integral to social and professional life, resulting in a constant feedback loop between actions and algorithmic incentives. Your self-perception is significantly mediated by metrics (likes, views). Emotional states become affective labor, constantly harvested by the system.";
+                impacts = [
+                    "High dependence on external validation",
+                    "Blurring of self/feed distinction",
+                    "Accelerated data harvesting of emotional surplus"
+                ];
+            } else {
+                titleEl.innerText = "STATE: THE SURPLUS SELF (SURVEILLANCE CAPITALISM)";
+                descEl.innerText = "Your existence is fully co-opted for the production of 'behavioral surplus' (Zuboff). The digital infrastructure dictates consciousness, emotion, and identity. Private life is fully liquidated into public data streams, offering near-total predictability for prediction markets. Sovereignty over self is effectively ceded to the data architecture.";
+                impacts = [
+                    "Total erosion of data sovereignty",
+                    "Maximum susceptibility to targeted manipulation",
+                    "Identity wholly defined by platform metrics"
+                ];
+            }
+
+            impactEl.innerHTML = impacts.map(i => `<div class="impact-item">${i}</div>`).join('');
+        }
+
+        function resetQuiz() {
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            document.getElementById('risk-bar').style.width = "0%";
+            document.getElementById('time-limit-modal').classList.add('hidden'); // Ensure modal is hidden
+            
+            // Reset slider values and the displayed text
+            document.querySelectorAll('.calc-input').forEach(i => {
+                i.value = 0;
+            });
+            document.querySelectorAll('span[id^="val-"]').forEach(s => s.innerText = "0.0 hrs");
+            
+            // Reset the clock
+            updateClock();
+        }
+
+        window.onload = function() {
+            updateClock(); // Initialize clock display
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surveillance Risk Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap');
+
+        body {
+            /* Removed background color for transparent/site integration */
+            font-family: 'Inter', sans-serif;
+        }
+
+        .mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Custom Checkbox Design (Adapted for Black/White) */
+        .check-container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            /* Increased margin for better spacing */
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #000;
+            /* Black text */
+            user-select: none;
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Highlight item on hover */
+        .check-container:hover {
+            background-color: #f3f3f3;
+        }
+
+        .check-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border-radius: 0;
+            /* Square checkmark */
+            transition: all 0.15s;
+            border: 2px solid #000;
+            /* Bold black border */
+        }
+
+        .check-container:hover input~.checkmark {
+            background-color: #000;
+        }
+
+        .check-container input:checked~.checkmark {
+            background-color: #000;
+            /* Black background when checked */
+            border-color: #000;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .check-container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .check-container .checkmark:after {
+            left: 5px;
+            top: 1px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            /* White check mark */
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .risk-meter {
+            transition: width 1s ease-in-out, background-color 1s ease;
+        }
+
+        .layer-title {
+            font-size: 0.8rem;
+            /* Adjusted for readability */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            /* Increased spacing */
+            color: #000;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid #000;
+            /* Thick black underline */
+            padding-bottom: 0.5rem;
+        }
+
+        .list-none li {
+            position: relative;
+            padding-left: 1.25rem;
+            /* Space for the custom marker */
+        }
+
+        .list-none li::before {
+            content: '>';
+            /* Custom bullet point */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            color: #000;
+            /* Black marker */
+        }
+    </style>
+</head>
+
+<body class="p-6 max-w-xl mx-auto bg-white border-2 border-black shadow-[8px_8px_0_#000]">
+
+    <div class="mb-8 border-b-4 border-black pb-4">
+        <h2 class="text-4xl font-extrabold text-black tracking-tight serif-title">
+            <span class="text-xl mono block uppercase tracking-widest leading-none">RISK ASSESSMENT</span>
+            SURVEILLANCE CALCULATOR
+        </h2>
+        <p class="text-sm text-black mt-3 mono">SOCIOLOGICAL DECODING OF DATA EXPOSURE</p>
+
+    </div>
+    <div id="quiz-section">
+        <div class="mb-8">
+            <h3 class="layer-title mono">I. INFRASTRUCTURE & BIOMETRICS</h3>
+            <label class="check-container">Always-on Smartphone (GPS/Mic enabled)
+                <input type="checkbox" value="15" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Biometric Authentication (FaceID/Fingerprint)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">IoT/Smart Home Ecosystems (Alexa, Ring, etc.)
+                <input type="checkbox" value="15" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Wearable Tech (Quantified Health/Bio-data)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <div class="mb-8">
+            <h3 class="layer-title mono">II. PLATFORM CAPITALISM & THE DIGITAL SELF</h3>
+            <label class="check-container">Active Social Media Presence (Performative Identity)
+                <input type="checkbox" value="15" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Algorithmic Curation (Feed-based news/content)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Voluntary Spatial Tracking (Location tagging/Maps)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Cross-Contextual Tracking (Accepting 3rd-party cookies)
+                <input type="checkbox" value="5" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <div class="mb-8">
+            <h3 class="layer-title mono">III. ALGORITHMIC GOVERNANCE & STATE</h3>
+            <label class="check-container">Digital Identification Integration (e.g., Aadhaar/DigiLocker)
+                <input type="checkbox" value="15" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Cashless Economy Participation (UPI/Digital Wallets)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Institutional Surveillance (Workplace/University portals)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <div class="mb-8">
+            <h3 class="layer-title mono">IV. BEHAVIORAL SURPLUS & PREDICTION</h3>
+            <label class="check-container">Cloud Dependency (Loss of data sovereignty)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Intimate Datafication (Health/Period tracking apps)
+                <input type="checkbox" value="15" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+            <label class="check-container">Targeted Ad Engagement (Commodification of desire)
+                <input type="checkbox" value="10" class="calc-input">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <button onclick="calculateRisk()"
+            class="w-full bg-black hover:bg-white border-2 border-black text-white hover:text-black font-extrabold py-4 px-4 rounded-none transition duration-150 mono text-base shadow-[4px_4px_0_#000]">
+            INITIATE DIGITAL EXHAUST ANALYSIS
+        </button>
+    </div>
+
+    <div id="result-section" class="hidden animate-fade-in">
+        <div class="mb-4 flex justify-between items-end border-b border-black pb-2">
+            <span class="text-xs font-bold text-black uppercase mono tracking-widest">DATA DECAY INTENSITY</span>
+            <span id="score-display" class="text-4xl font-extrabold text-black serif-title">0%</span>
+        </div>
+
+        <div class="w-full bg-white border-2 border-black h-6 mb-8 overflow-hidden">
+            <div id="risk-bar" class="risk-meter h-full" style="width: 0%"></div>
+        </div>
+
+        <div class="bg-white p-6 rounded-none border-2 border-black shadow-[4px_4px_0_#000]">
+            <h3 id="risk-title" class="font-extrabold text-2xl text-black mb-3 serif-title"></h3>
+            <p id="risk-desc" class="text-sm text-black leading-relaxed mono text-justify"></p>
+
+            <div class="mt-6 pt-4 border-t-2 border-black">
+                <p class="text-xs text-black font-bold mb-3 uppercase tracking-widest mono">PRIMARY SURVEILLANCE AGENTS
+                </p>
+                <div id="watchers-list" class="flex flex-wrap gap-2">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="resetQuiz()"
+            class="mt-8 text-sm text-black hover:bg-black hover:text-white w-full text-center uppercase tracking-widest font-bold transition-colors py-2 border-2 border-black rounded-none">
+            RE-INITIATE ANALYSIS
+        </button>
+    </div>
+
+    <script>
+        function calculateRisk() {
+            const inputs = document.querySelectorAll('.calc-input');
+            let totalScore = 0;
+            // Max Score: 160
+            let maxScore = 160;
+
+            inputs.forEach(input => {
+                if (input.checked) {
+                    totalScore += parseInt(input.value);
+                }
+            });
+
+            const percentage = Math.round((totalScore / maxScore) * 100);
+
+            // UI Updates
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+
+            // Animate Bar and Display Score
+            const riskBar = document.getElementById('risk-bar');
+            const scoreDisplay = document.getElementById('score-display');
+
+            // Reset for animation if re-calculated
+            riskBar.style.width = "0%";
+            scoreDisplay.innerText = "0%";
+
+            setTimeout(() => {
+                riskBar.style.width = percentage + "%";
+                scoreDisplay.innerText = percentage + "%";
+
+                // High-Contrast Color Logic (Red, Yellow, Green replaced with specific styles)
+                if (percentage < 30) {
+                    // Low Risk / Digital Periphery (Green equivalent)
+                    riskBar.className = "risk-meter h-full bg-[#185526]";
+                    riskBar.setAttribute('data-level', 'low');
+                } else if (percentage < 60) {
+                    // Medium Risk / Algorithmic Subject (Yellow equivalent)
+                    riskBar.className = "risk-meter h-full bg-[#cc8400]";
+                    riskBar.setAttribute('data-level', 'medium');
+                } else {
+                    // High Risk / Hyper-Subject (Red equivalent)
+                    riskBar.className = "risk-meter h-full bg-[#990000]";
+                    riskBar.setAttribute('data-level', 'high');
+                }
+            }, 100);
+
+            // Content Logic
+            const titleEl = document.getElementById('risk-title');
+            const descEl = document.getElementById('risk-desc');
+            const watchersEl = document.getElementById('watchers-list');
+
+            let watchers = [];
+
+            if (percentage < 30) {
+                titleEl.innerText = "CLASSIFICATION: DIGITAL PERIPHERY";
+                descEl.innerText = "You exist on the margins of the 'Datafied Society'. By minimizing digital traces, you resist the commodification of behavioral surplus. However, this level of disconnection may result in exclusion from modern civic infrastructures and algorithmic social capital, creating a form of 'digital invisibility' that can be both liberating and isolating.";
+                watchers = ["ISP Providers", "Local Network Admins", "Cell Tower Triangulation"];
+            } else if (percentage < 60) {
+                titleEl.innerText = "CLASSIFICATION: THE ALGORITHMIC SUBJECT";
+                descEl.innerText = "You represent the standard subject of 'Algorithmic Governance'. Your daily interactions—financial, social, and spatial—are routinely harvested to construct a 'Digital Self'. This profile is used to predict behavior and stratify access to services. While you retain some agency, your choices are subtly nudged by opaque architectures of choice.";
+                watchers = ["Social Platforms", "Ad Networks", "Financial Institutions", "State Registries", "Telecom Operators"];
+            } else {
+                titleEl.innerText = "CLASSIFICATION: THE QUANTIFIED SELF / HYPER-SUBJECT";
+                descEl.innerText = "You are fully integrated into the machinery of 'Surveillance Capitalism'. Your biological, social, and economic life is rendered transparent to the 'Big Other'. This state of total datafication allows for high-fidelity behavioral prediction and modification. You have traded privacy for maximum connectivity, becoming a primary node of value extraction.";
+                watchers = ["State Apparatus", "Global Tech Oligopolies", "Data Brokers", "Predictive AI Models", "Health Insurers", "Third-Party Aggregators"];
+            }
+
+            // Render Watchers (using high-contrast style)
+            watchersEl.innerHTML = watchers.map(w =>
+                `<span class="bg-black text-white px-2 py-1 rounded-none text-xs font-bold mono border border-white shadow-[2px_2px_0_#000]">${w}</span>`
+            ).join('');
+        }
+
+        function resetQuiz() {
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            document.getElementById('risk-bar').style.width = "0%";
+            document.querySelectorAll('.calc-input').forEach(i => i.checked = false);
+        }
+    </script>
+</body>
+
+</html>
