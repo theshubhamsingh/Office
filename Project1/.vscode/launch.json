@@ -5,11 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         
+        
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open solarsystem.html",
-            "file": "/Users/sam/Documents/Code/Python/Office/Project1/solarsystem.html"
+            "name": "Open digital_risk_calc.html",
+            "file": "/Users/sam/Documents/Code/Python/Office/Project1/digital_risk_calc.html"
         }
     ]
 }
