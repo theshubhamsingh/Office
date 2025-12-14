@@ -45,12 +45,23 @@
         <div class="input-group">
             <label for="diagonal">DIAGONAL (INCHES):</label>
             <div class="input-row">
-                <input type="range" id="diagonal_slider" min="5" max="150" value="27" step="0.1"
-                    list="diagonal-markers" oninput="updateNumber(this)">
+                <div class="slider-wrapper" style="width:100%; position:relative;">
+                    <input type="range" id="diagonal_slider" min="5" max="150" value="27" step="0.1"
+                        list="diagonal-markers" oninput="updateNumber(this)">
+                    <div class="slider-marks" aria-hidden="true">
+                        <span style="left:5.52%"></span>
+                        <span style="left:7.31%"></span>
+                        <span style="left:13.10%"></span>
+                        <span style="left:15.17%"></span>
+                        <span style="left:18.62%"></span>
+                        <span style="left:25.52%"></span>
+                        <span style="left:34.48%"></span>
+                    </div>
+                </div>
                 <input type="number" id="diagonal" class="number-input mono" value="27" min="5" max="150" step="0.1"
                     oninput="updateSlider(this)">
             </div>
-            
+
             <datalist id="diagonal-markers">
                 <option value="13"></option>
                 <option value="15.6"></option> 
