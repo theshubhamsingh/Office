@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPI CALCULATOR // HIGH CONTRAST</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="calculator-container">
+        <h2 class="serif-title">Pixel Per Inches Calculator <br> V1.0</h2>
+
+        <div class="input-group">
+            <label for="resolution-preset">RESOLUTION PRESET:</label>
+            <select id="resolution-preset" class="mono" onchange="applyResolution(this)">
+                <option value="">-- CUSTOM --</option>
+                <option value="hd">HD (1280x720)</option>
+                <option value="fhd">FHD (1920x1080)</option>
+                <option value="qhd">QHD or 2K (2560x1440)</option>
+                <option value="uhd">UHD or 4K (3840x2160)</option>
+                <option value="5k">5K (5120x2880)</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="width">WIDTH (PIXELS):</label>
+            <div class="input-row">
+                <input type="range" id="width_slider" min="640" max="7680" value="1920" step="1"
+                oninput="updateNumber(this); resetPreset()">
+                <input type="number" id="width" class="number-input mono" value="1920" min="640" max="7680" oninput="updateSlider(this); resetPreset()">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="height">HEIGHT (PIXELS):</label>
+            <div class="input-row">
+                <input type="range" id="height_slider" min="480" max="4320" value="1080" step="1"
+                    oninput="updateNumber(this)">
+                <input type="number" id="height" class="number-input mono" value="1080" min="480" max="4320"
+                    oninput="updateSlider(this); resetPreset()">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="diagonal">DIAGONAL (INCHES):</label>
+            <div class="input-row">
+                <input type="range" id="diagonal_slider" min="5" max="150" value="27" step="0.1"
+                    list="diagonal-markers" oninput="updateNumber(this)">
+                <input type="number" id="diagonal" class="number-input mono" value="27" min="5" max="150" step="0.1"
+                    oninput="updateSlider(this)">
+            </div>
+            
+            <datalist id="diagonal-markers">
+                <option value="13"></option>
+                <option value="15.6"></option> 
+                <option value="24"></option> 
+                <option value="27"></option>
+                <option value="32"></option>
+                <option value="42"></option>
+                <option value="55"></option>
+            </datalist>
+        </div>
+<!-- 
+    <button class="mono" onclick="calculatePPI()">CALCULATE PPI</button>
+-->
+
+        <div class="result-box">
+            <p class="mono">RESULT PPI:</p>
+            <p id="result-output" class="mono">--</p>
+        </div>
+    </div>
+    <script src="ppi_calc.js"></script>
+</body>
+
+</html>
